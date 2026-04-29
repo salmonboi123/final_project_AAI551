@@ -47,3 +47,16 @@ REEA allows users to input energy datasets, automatically clean the data, calcul
 1. Clone the repository:
    ```bash
    git clone [https://github.com/your-username/REEA.git](https://github.com/your-username/REEA.git)
+
+Data Format Requirements
+The analyzer expects a CSV file with the following header structure. Data should ideally be in 10, 30, or 60 minute intervals.
+
+timestamp: Recording time in YYYY-MM-DD HH:MM:SS format
+
+actual_output_kw: Measured power output in kilowatts
+
+expected_power_kw: Theoretical power based on conditions
+
+irradiance_w_m2: Solar radiation in Watts per square meter (Solar only)
+
+wind_speed_m_s: Wind speed in meters per second (Wind only)
