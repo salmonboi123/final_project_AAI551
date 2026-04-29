@@ -55,7 +55,7 @@ wind_speed_m_s:
 - Python 3.8+
 - Requirements: `pandas`, `numpy`, `matplotlib`, `pytest`
 
-### Setup (NEED TO WORK ON)
+### Setup 
 1. Clone the repository:
    ```bash
    git clone [https://github.com/salmonboi123/final_project_AAI551.git](https://github.com/salmonboi123/final_project_AAI551.git)
