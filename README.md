@@ -58,7 +58,7 @@ wind_speed_m_s:
 ### Setup (NEED TO WORK ON)
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/your-username/REEA.git](https://github.com/your-username/REEA.git)
+   git clone [https://github.com/salmonboi123/final_project_AAI551.git](https://github.com/salmonboi123/final_project_AAI551.git)
 
 Data Format Requirements
 The analyzer expects a CSV file with the following header structure. Data should ideally be in 10, 30, or 60 minute intervals.
