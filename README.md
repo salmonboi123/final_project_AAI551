@@ -40,14 +40,14 @@ REEA allows users to input energy datasets, automatically clean the data, calcul
 ## Dataset Information
 The REEA analyzer requires a CSV file with specific headers. To ensure the logic executes correctly, please format your data as follows:
 Required Column Headers Column Name Type Description timestamp DateTime The date and time of recording (YYYY-MM-DD HH:MM:SS), 
-actual_output_kw:
-   Float: The actual power measured at the site in kilowatts
-expected_power_kw:
-   Float: The theoretical maximum power based on weather conditions
-irradiance_w_m2:
-   Float(Solar Only) Solar radiation in Watts per square meter
-wind_speed_m_s:
-   Float(Wind Only) Wind speed in meters per second
+- actual_output_kw:
+   - Float: The actual power measured at the site in kilowatts
+- expected_power_kw:
+   - Float: The theoretical maximum power based on weather conditions
+- irradiance_w_m2:
+   - Float(Solar Only) Solar radiation in Watts per square meter
+- wind_speed_m_s:
+   - Float(Wind Only) Wind speed in meters per second
 
 ## Installation & Usage
 
