@@ -11,6 +11,16 @@ class EnergySite:
         self.capacity_kw = capacity_kw
         self.data = None
 
+    def __str__(self):
+        """Return a readable summary of the energy site."""
+        return f"{self.name} ({self.capacity_kw} kW)"
+
+    def __len__(self):
+        """Return the number of loaded data rows."""
+        if self.data is None:
+            return 0
+        return len(self.data)
+
     @logger
     def load_data(self, file_path):
         """Load the CSV file and do a few basic cleanup checks."""
@@ -22,24 +32,41 @@ class EnergySite:
         if "timestamp" in data.columns:
             data["timestamp"] = pd.to_datetime(data["timestamp"], errors="coerce")
 
+        data = data.rename(
+            columns={
+                "irradiance_w_m2": "irradiance_wm2",
+                "wind_speed_m_s": "wind_speed_ms",
+            }
+        )
+
         numeric_columns = data.select_dtypes(include=["number"]).columns
         data[numeric_columns] = data[numeric_columns].fillna(0)
 
-        if "power_output_kw" in data.columns and (data["power_output_kw"] < 0).any():
-            raise InvalidDataError("Power output cannot be negative.")
+        output_columns = [column for column in ("actual_output_kw", "power_output_kw") if column in data.columns]
+        for column in output_columns:
+            if (data[column] < 0).any():
+                raise InvalidDataError("Power output cannot be negative.")
 
         self.data = data
         return self.data
 
-    # In energy_site.py
     def calculate_yield_gap(self):
-        # Check for 'actual_output_kw'
+        """Calculate yield gap and performance ratio for loaded data."""
+        if self.data is None:
+            raise InvalidDataError("Load data before calculating yield gap.")
+
         if "actual_output_kw" not in self.data.columns:
             raise InvalidDataError("Missing required column: actual_output_kw")
-        
-        # Perform the NumPy math
+
+        if "expected_power_kw" not in self.data.columns:
+            raise InvalidDataError("Missing required column: expected_power_kw")
+
         self.data["yield_gap_kw"] = self.data["expected_power_kw"] - self.data["actual_output_kw"]
-        self.data["performance_ratio"] = self.data["actual_output_kw"] / self.data["expected_power_kw"]
+        self.data["performance_ratio"] = np.where(
+            self.data["expected_power_kw"] > 0,
+            self.data["actual_output_kw"] / self.data["expected_power_kw"],
+            0,
+        )
         
         return self.data
 
