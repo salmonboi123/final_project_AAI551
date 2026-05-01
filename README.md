@@ -1,62 +1,96 @@
-
 # Renewable Energy Efficiency Analyzer (REEA)
 
 **Course:** AAI/CPE/EE 551  
 **Team Members:** Riley Parker, Tyler Komentani, and Bryan Barzola
 
+## Team Information
+
+Before final submission, replace the placeholders below with each member's official Stevens information.
+
+| Team Member | Email | Stevens ID | Main Contributions |
+| --- | --- | --- | --- |
+| Riley Parker | TODO | TODO | Project setup, renewable energy class design, README development |
+| Tyler Komentani | TODO | TODO | Notebook workflow, pytest coverage, validation improvements |
+| Bryan Barzola | TODO | TODO | Dataset preparation, analysis review, documentation support |
+
 ## Project Overview
-The **Renewable Energy Efficiency Analyzer (REEA)** is a Python-based tool designed to solve a critical engineering challenge: quantifying the impact of environmental variables on renewable energy output. While solar panels and wind turbines have theoretical "nameplate" capacities, real-world factors like temperature, irradiance, and wind speed fluctuations often lead to performance gaps.
 
-REEA allows users to input energy datasets, automatically clean the data, calculate key efficiency metrics, and identify "underperformance events" where hardware may be failing or environmental conditions are sub-optimal.
+The Renewable Energy Efficiency Analyzer is a Python project that studies renewable energy site performance. It compares actual power output with expected power output, then calculates two key metrics:
 
-## Core Features
-- **Object-Oriented Design:** Modular class structure for different energy site types (Solar and Wind).
-- **Efficiency Analytics:** Calculates "Yield Gaps" and "Performance Ratios" using NumPy for high-performance vector calculations.
-- **Anomaly Detection:** Identifies "bad days" where production drops significantly below a rolling average.
-- **Large Dataset Support:** Utilizes Python Generators to process massive time-series datasets without exhausting system memory.
-- **Data Visualization:** Integrated Matplotlib plots to visualize Actual vs. Predicted output and efficiency correlations.
+- **Yield gap:** expected output minus actual output
+- **Performance ratio:** actual output divided by expected output
 
----
+This helps identify when a solar or wind energy site is producing less power than expected. The project uses a local CSV dataset, object-oriented design, NumPy calculations, and Pandas data processing.
 
-## Technical Implementation
+## Dependencies
 
-### 1. Class Hierarchy (OOP)
-- **`EnergySite` (Parent):** Manages basic site metadata and CSV data ingestion via Pandas.
-- **`SolarFarm` (Child):** Implements solar-specific logic, including irradiance-based performance ratios.
-- **`WindFarm` (Child):** Handles wind-specific constraints such as "Cut-in" and "Cut-out" speed safety logic.
+Use Python **3.12, 3.13, or 3.14**.
 
-### 2. Advanced Python Functionality
-- **Operator Overloading:** The `+` operator is overloaded to merge two site objects into a single virtual site with combined capacity.
-- **Decorators:** A custom `@logger` decorator tracks function execution and performance in the console.
-- **Generators:** Data is yielded in chunks to ensure the program remains performant with large datasets.
+Required Python libraries:
 
-### 3. Data Science Stack
-- **Pandas:** Used for timestamp alignment and data cleaning.
-- **NumPy:** Handles the mathematical heavy lifting for theoretical vs. actual yield calculations.
-- **Matplotlib:** Generates scatter plots and line graphs for performance analysis.
+- `pandas`
+- `numpy`
+- `pytest`
 
----
+Install dependencies with:
 
-## Dataset Information
-The REEA analyzer requires a CSV file with specific headers. To ensure the logic executes correctly, please format your data as follows:
-Required Column Headers Column Name Type Description timestamp DateTime The date and time of recording (YYYY-MM-DD HH:MM:SS), 
-- actual_output_kw:
-   - Float: The actual power measured at the site in kilowatts
-- expected_power_kw:
-   - Float: The theoretical maximum power based on weather conditions
-- irradiance_w_m2:
-   - Float(Solar Only) Solar radiation in Watts per square meter
-- wind_speed_m_s:
-   - Float(Wind Only) Wind speed in meters per second
+```bash
+python -m pip install pandas numpy pytest
+```
 
-## Installation & Usage
+## File Structure
 
-### Prerequisites
-- Python 3.8+
-- Requirements: `pandas`, `numpy`, `matplotlib`, `pytest`
+```text
+final_project_AAI551/
+├── main.ipynb                 # Main notebook workflow for the assignment
+├── main.py                    # Optional command-line runner
+├── energy_site.py             # EnergySite, SolarFarm, and WindFarm classes
+├── utils.py                   # Custom exception, logger decorator, CSV generator
+├── data/
+│   └── sample_data.csv        # Sample renewable energy dataset
+└── tests/
+    ├── test_calculations.py   # Pytest tests for calculations and validation
+    └── generate_data.py       # Helper script for creating sample data
+```
 
-### Setup 
-1. Clone the repository:
-   ```bash
-   git clone [https://github.com/salmonboi123/final_project_AAI551.git](https://github.com/salmonboi123/final_project_AAI551.git)
+## How to Run
 
+The required main workflow is in `main.ipynb`. Open the notebook and run each cell from top to bottom.
+
+You can also run the command-line version:
+
+```bash
+python main.py --file data/sample_data.csv --name "Demo Solar Site" --capacity 500 --solar
+```
+
+To show an example of generator-based chunk loading:
+
+```bash
+python main.py --file data/sample_data.csv --name "Demo Solar Site" --capacity 500 --solar --show-chunks
+```
+
+## How to Test
+
+Run the Pytest suite with:
+
+```bash
+python -m pytest tests -q
+```
+
+If Windows temp-folder permissions cause issues, use:
+
+```bash
+python -m pytest tests -q -p no:cacheprovider
+```
+
+## Requirement Coverage
+
+- **Classes with inheritance:** `EnergySite` is the parent class; `SolarFarm` and `WindFarm` inherit from it.
+- **Meaningful functions:** `build_site`, `run_analysis`, `data_chunk_generator`, and class methods perform project logic.
+- **Advanced libraries:** Pandas loads and cleans CSV data; NumPy performs vectorized performance calculations.
+- **Exception handling:** The project checks for missing files, empty data, missing required columns, and invalid negative output.
+- **Data I/O:** The program reads `data/sample_data.csv`.
+- **Loops and conditionals:** Loops are used in validation and generator processing; conditionals select site type and validate inputs.
+- **Mutable and immutable types:** Lists, dictionaries, DataFrames, strings, numbers, and tuples are used throughout the project.
+- **Operator overloading:** `__str__`, `__len__`, and `__add__` are implemented.
+- **Part 2 features:** The project uses `__name__`, a generator function, built-in modules, and list comprehension.

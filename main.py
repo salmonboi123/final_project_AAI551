@@ -15,6 +15,7 @@ def build_site(args):
 
 
 def run_analysis(args):
+    """Load the selected dataset, run calculations, and print summary metrics."""
     site = build_site(args)
     site.load_data(args.file)
 
@@ -40,6 +41,7 @@ def run_analysis(args):
 
 
 def parse_args():
+    """Parse command-line options for the renewable energy analyzer."""
     parser = argparse.ArgumentParser(description="Renewable Energy Efficiency Analyzer")
     parser.add_argument("--file", required=True, help="Path to the input CSV file")
     parser.add_argument("--name", default="Demo Site", help="Name of the energy site")
@@ -54,6 +56,7 @@ def parse_args():
 
 
 def main():
+    """Run the command-line version of the renewable energy analyzer."""
     args = parse_args()
 
     if not Path(args.file).exists():
