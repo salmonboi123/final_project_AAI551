@@ -9,9 +9,9 @@ Before final submission, replace the placeholders below with each member's offic
 
 | Team Member | Email | Stevens ID | Main Contributions |
 | --- | --- | --- | --- |
-| Riley Parker | TODO | TODO | Project setup, renewable energy class design, README development |
-| Tyler Komentani | TODO | TODO | Notebook workflow, pytest coverage, validation improvements |
-| Bryan Barzola | TODO | TODO | Dataset preparation, analysis review, documentation support |
+| Riley Parker | rparker3@stevens.edu | 20019955 | Project setup, renewable energy class design, README development |
+| Tyler Komentani | tkometan@stevens.edu | 20024594 | Notebook workflow, pytest coverage, validation improvements |
+| Bryan Barzola | bbarzola@stevens.edu | TODO | Dataset preparation, analysis review, documentation support |
 
 ## Project Overview
 
