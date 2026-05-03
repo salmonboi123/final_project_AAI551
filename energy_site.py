@@ -17,6 +17,11 @@ class EnergySite:
         rows = len(self.data) if self.data is not None else 0
         return f"{type(self).__name__}('{self.name}', {self.capacity_kw} kW, {rows} rows loaded)"
 
+    def __repr__(self):
+        """Developer-facing representation. Useful for debugging in the
+        Python shell where __str__ would be too long."""
+        return f"{type(self).__name__}(name={self.name!r}, capacity_kw={self.capacity_kw})"
+
     def __len__(self):
         """Return the number of loaded data rows."""
         if self.data is None:
