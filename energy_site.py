@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from pathlib import Path
 from utils import InvalidDataError, logger
 
 
@@ -13,7 +14,8 @@ class EnergySite:
 
     def __str__(self):
         """Return a readable summary of the energy site."""
-        return f"{self.name} ({self.capacity_kw} kW)"
+        rows = len(self.data) if self.data is not None else 0
+        return f"{type(self).__name__}('{self.name}', {self.capacity_kw} kW, {rows} rows loaded)"
 
     def __len__(self):
         """Return the number of loaded data rows."""
@@ -24,6 +26,11 @@ class EnergySite:
     @logger
     def load_data(self, file_path):
         """Load the CSV file and do a few basic cleanup checks."""
+        # Check the file actually exists before pandas tries to open it.
+        # This gives a clearer error than pandas would.
+        if not Path(file_path).exists():
+            raise FileNotFoundError(f"Could not find data file: {file_path}")
+
         data = pd.read_csv(file_path)
 
         if data.empty:
@@ -78,6 +85,11 @@ class SolarFarm(EnergySite):
         super().__init__(name, capacity_kw)
         self.panel_efficiency = panel_efficiency
 
+    def __str__(self):
+        """Solar-specific string. Shows panel efficiency too."""
+        base = super().__str__()
+        return f"{base[:-1]}, panel_eff={self.panel_efficiency:.0%})"
+
     def estimate_expected_power(self):
         """Estimate solar output from irradiance if expected power is not already listed."""
         if self.data is None:
@@ -109,6 +121,11 @@ class WindFarm(EnergySite):
         self.cut_in_speed = cut_in_speed
         self.rated_speed = rated_speed
         self.cut_out_speed = cut_out_speed
+
+    def __str__(self):
+        """Wind-specific string. Shows cut-in and cut-out speeds."""
+        base = super().__str__()
+        return f"{base[:-1]}, cut-in={self.cut_in_speed} m/s, cut-out={self.cut_out_speed} m/s)"
 
     def estimate_expected_power(self):
         """Estimate wind output from wind speed if expected power is not already listed."""
