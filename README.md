@@ -5,13 +5,11 @@
 
 ## Team Information
 
-Before final submission, replace the placeholders below with each member's official Stevens information.
-
 | Team Member | Email | Stevens ID | Main Contributions |
 | --- | --- | --- | --- |
 | Riley Parker | rparker3@stevens.edu | 20019955 | Project setup, renewable energy class design, README development |
 | Tyler Komentani | tkometan@stevens.edu | 20024594 | Notebook workflow, pytest coverage, validation improvements |
-| Bryan Barzola | bbarzola@stevens.edu | TODO | Dataset preparation, analysis review, documentation support |
+| Bryan Barzola | bbarzola@stevens.edu | 20019879 | Test coverage, helper utilities, exception handling, documentation |
 
 ## Project Overview
 
@@ -45,7 +43,7 @@ final_project_AAI551/
 ├── main.ipynb                 # Main notebook workflow for the assignment
 ├── main.py                    # Optional command-line runner
 ├── energy_site.py             # EnergySite, SolarFarm, and WindFarm classes
-├── utils.py                   # Custom exception, logger decorator, CSV generator
+├── utils.py                   # Custom exception, logger decorator, CSV generator, average_kw helper
 ├── data/
 │   └── sample_data.csv        # Sample renewable energy dataset
 └── tests/
@@ -86,9 +84,9 @@ python -m pytest tests -q -p no:cacheprovider
 ## Requirement Coverage
 
 - **Classes with inheritance:** `EnergySite` is the parent class; `SolarFarm` and `WindFarm` inherit from it.
-- **Meaningful functions:** `build_site`, `run_analysis`, `data_chunk_generator`, and class methods perform project logic.
+- **Meaningful functions:** `build_site`, `run_analysis`, `data_chunk_generator`, `average_kw`, and class methods perform project logic.
 - **Advanced libraries:** Pandas loads and cleans CSV data; NumPy performs vectorized performance calculations.
-- **Exception handling:** The project checks for missing files, empty data, missing required columns, and invalid negative output.
+- **Exception handling:** The project checks for missing files (FileNotFoundError), empty data, missing required columns, and invalid negative output.
 - **Data I/O:** The program reads `data/sample_data.csv`.
 - **Loops and conditionals:** Loops are used in validation and generator processing; conditionals select site type and validate inputs.
 - **Mutable and immutable types:** Lists, dictionaries, DataFrames, strings, numbers, and tuples are used throughout the project.
